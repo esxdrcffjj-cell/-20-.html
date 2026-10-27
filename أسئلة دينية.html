@@ -1,0 +1,493 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title data-keep>أسئلة دينية</title>
+<meta data-keep name="claude:viewport-fit-sides" content="cover">
+<link data-keep rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=Noto+Naskh+Arabic:wght@400;600&family=Tajawal:wght@400;500;700&display=swap">
+<style data-keep id="app-style">
+/* Layout: header band with search, then a main column of collapsible questions beside a narrow side column holding contact numbers and the owner entrance. */
+:root{
+  --bg:#eef3f1; --surface:#fbfdfc; --ink:#12302d; --muted:#4f6b66; --line:#cfdcd8; --tint:#e1ece8;
+  --accent:#0e5c52; --on-accent:#ffffff; --brass:#8a5f0e; --danger:#a32f2f;
+  --hd-bg:#0b3b35; --hd-ink:#eaf4f1; --hd-brass:#e0b457;
+  --good:#1f7a4d; --good-bg:#dff1e7; --bad-bg:#f7e2e2;
+  --f-display:'Reem Kufi','Noto Kufi Arabic',Tahoma,sans-serif;
+  --f-body:'Noto Naskh Arabic','Amiri',Tahoma,serif;
+  --f-ui:'Tajawal',Tahoma,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0c1c1a; --surface:#132a27; --ink:#e4efec; --muted:#94b0aa; --line:#234541; --tint:#183431;
+    --accent:#4fc0ac; --on-accent:#05211d; --brass:#e0b457; --danger:#f08a8a;
+    --hd-bg:#07201d; --hd-ink:#e4efec; --hd-brass:#e0b457; color-scheme:dark;
+    --good:#6fd6a0; --good-bg:#17382b; --bad-bg:#3b1c1c;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0c1c1a; --surface:#132a27; --ink:#e4efec; --muted:#94b0aa; --line:#234541; --tint:#183431;
+  --accent:#4fc0ac; --on-accent:#05211d; --brass:#e0b457; --danger:#f08a8a;
+  --hd-bg:#07201d; --hd-ink:#e4efec; --hd-brass:#e0b457; color-scheme:dark;
+  --good:#6fd6a0; --good-bg:#17382b; --bad-bg:#3b1c1c;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);direction:rtl;font-size:16px;line-height:1.6}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1040px;margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px))}
+header.top{background:var(--hd-bg);color:var(--hd-ink)}
+header.top .wrap{padding-block:28px 26px;display:grid;gap:18px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand svg{color:var(--hd-brass);flex:none}
+.brand h1{margin:0;font-family:var(--f-display);font-weight:700;font-size:clamp(1.7rem,5vw,2.4rem);line-height:1.2;text-wrap:balance}
+.brand p{margin:2px 0 0;font-family:var(--f-body);font-size:1.05rem;opacity:.85}
+.search{display:block;max-width:560px}
+.search input{width:100%;padding:12px 16px;border-radius:6px;border:1px solid transparent;background:var(--surface);color:var(--ink);font-size:1rem}
+.search input::placeholder{color:var(--muted)}
+main.wrap{display:grid;gap:28px;padding-block:26px 40px}
+@media (min-width:860px){main.wrap{grid-template-columns:minmax(0,1fr) 300px;align-items:start}}
+.col{min-width:0;display:grid;gap:20px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:0}
+.chip{padding:5px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);cursor:pointer;font-size:.92rem}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+#count{color:var(--muted);font-size:.9rem;font-variant-numeric:tabular-nums}
+#list{display:grid;border-top:1px solid var(--line)}
+details.q{border-bottom:1px solid var(--line)}
+details.q summary{list-style:none;cursor:pointer;display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:16px 4px}
+details.q summary::-webkit-details-marker{display:none}
+details.q summary::after{content:"+";font-family:var(--f-ui);font-size:1.5rem;line-height:1;color:var(--accent);flex:none;order:-1;width:1.2em;text-align:center}
+details.q[open] summary::after{content:"\2212"}
+.qt{min-width:0;display:grid;gap:6px}
+.qt strong{font-family:var(--f-body);font-weight:600;font-size:1.2rem;line-height:1.7;overflow-wrap:anywhere}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.78rem;letter-spacing:.02em;padding:1px 10px;border-radius:4px;background:var(--tint);color:var(--muted)}
+.tag.sample{background:transparent;border:1px dashed var(--brass);color:var(--brass)}
+.ans{padding:0 4px 18px 4px;padding-inline-start:calc(1.2em + 16px)}
+.ans p{margin:0 0 12px;font-family:var(--f-body);font-size:1.15rem;line-height:2;white-space:pre-wrap;overflow-wrap:anywhere;max-width:65ch}
+.meta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;color:var(--muted);font-size:.85rem}
+.empty{margin:0;padding:28px 4px;color:var(--muted);font-family:var(--f-body);font-size:1.1rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;display:grid;gap:14px}
+.card h2{margin:0;font-family:var(--f-display);font-weight:700;font-size:1.25rem}
+.phone{display:grid;gap:8px;padding-top:12px;border-top:1px solid var(--line)}
+.phone:first-of-type{border-top:0;padding-top:0}
+.phone small{color:var(--muted)}
+.num{direction:ltr;unicode-bidi:isolate;text-align:right;font-size:1.45rem;font-weight:700;letter-spacing:.04em;font-variant-numeric:tabular-nums;user-select:all}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 16px;border-radius:6px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;text-decoration:none;font-weight:500;font-size:.95rem}
+.btn:hover{background:var(--tint)}
+.btn.solid{background:var(--accent);color:var(--on-accent)}
+.btn.solid:hover{filter:brightness(1.08);background:var(--accent)}
+.btn.danger{border-color:var(--danger);color:var(--danger)}
+.btn.small{padding:3px 12px;font-size:.85rem}
+.btn[disabled]{opacity:.55;cursor:wait}
+.note{margin:0;color:var(--muted);font-size:.9rem}
+form.f{display:grid;gap:12px}
+.fld{display:grid;gap:4px}
+.fld label{font-size:.9rem;color:var(--muted)}
+.fld input,.fld textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--bg);font-family:var(--f-body);font-size:1.1rem}
+.fld textarea{min-height:110px;resize:vertical;line-height:1.8}
+.fld input[type="password"]{font-family:var(--f-ui)}
+.foot{color:var(--muted);font-size:.88rem;font-family:var(--f-body);line-height:1.9}
+.opts{display:grid;gap:8px;margin:0 0 14px;max-width:65ch}
+.opts-h{margin:0 0 8px;font-size:.9rem;color:var(--muted)}
+.opt-btn{text-align:start;padding:10px 14px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer;font-family:var(--f-body);font-size:1.1rem;line-height:1.7}
+.opt-btn:hover:not([disabled]){border-color:var(--accent)}
+.opt-btn[disabled]{cursor:default}
+.opt-btn.right{border-color:var(--good);background:var(--good-bg);font-weight:600}
+.opt-btn.wrong{border-color:var(--danger);background:var(--bad-bg)}
+.res{margin:0 0 12px;font-weight:700}
+.res.right{color:var(--good)}
+.res.wrong{color:var(--danger)}
+#score{font-size:.9rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.optrow{display:flex;gap:10px;align-items:center}
+.optrow input[type="text"]{flex:1;min-width:0}
+.fld input[type="radio"]{width:auto;padding:0;accent-color:var(--accent)}
+.cert-out,.cert-form{display:grid;gap:12px}
+.url{direction:ltr;unicode-bidi:isolate;text-align:right;font-size:.85rem;color:var(--muted);overflow-wrap:anywhere;user-select:all}
+.sw{display:inline-block;width:.9em;height:.9em;border-radius:50%;margin-inline-end:6px;vertical-align:-1px;border:1px solid var(--line)}
+.cert-out canvas{width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px;background:#fbfdfc}
+.opt{font-family:var(--f-ui);font-size:.8rem;font-weight:500;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 8px;margin-inline-start:8px;vertical-align:middle}
+#toast{position:fixed;inset-inline:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));margin-inline:auto;width:fit-content;max-width:calc(100% - 32px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:6px;font-size:.95rem;z-index:20}
+@media (prefers-reduced-motion:no-preference){details.q .ans{animation:fade .18s ease-out}@keyframes fade{from{opacity:0}to{opacity:1}}}
+</style>
+
+<div id="root" lang="ar" dir="rtl">
+</div>
+
+<script type="application/json" id="state">{"v":6,"phones":[{"label":"رقم التواصل الأول","n":"01225320419"},{"label":"رقم التواصل الثاني","n":"01225320285"}],"pass":{"salt":"cd239c075b2d09a8","hash":"aa2437e9be3220f9bd5875a5bad7990aa6d7e6dcc7934fa75c38fdeeaac23ebf"},"questions":[{"id":"b1","q":"كم عدد ركعات صلاة الفجر المفروضة؟","a":"صلاة الفجر ركعتان.","cat":"عبادات","date":"2026-10-28","opts":["ثلاث ركعات","ركعتان","أربع ركعات"],"ok":1},{"id":"b2","q":"كم عدد ركعات صلاة المغرب؟","a":"صلاة المغرب ثلاث ركعات.","cat":"عبادات","date":"2026-10-28","opts":["ركعتان","أربع ركعات","ثلاث ركعات"],"ok":2},{"id":"b3","q":"ما مقدار زكاة المال إذا بلغ النصاب وحال عليه الحول؟","a":"مقدار زكاة المال ربع العشر، أي 2.5% من المال الذي بلغ النصاب ومرّ عليه عام هجري كامل.","cat":"عبادات","date":"2026-10-28","opts":["2.5% (ربع العشر)","5%","10%"],"ok":0},{"id":"b4","q":"أيٌّ مما يلي ينقض الوضوء؟","a":"ينقض الوضوء ما يخرج من السبيلين، ومنه خروج الريح. أما الأكل والكلام والنظر فلا تنقضه.","cat":"عبادات","date":"2026-10-28","opts":["الأكل","الكلام","خروج الريح","النظر"],"ok":2},{"id":"b5","q":"أين يقف الحجاج يوم التاسع من ذي الحجة؟","a":"يقف الحجاج بعرفة يوم التاسع من ذي الحجة، والوقوف بها من أعظم أركان الحج.","cat":"عبادات","date":"2026-10-28","opts":["منى","عرفة","مزدلفة"],"ok":1},{"id":"b6","q":"كم عدد أركان الإيمان؟","a":"أركان الإيمان ستة: الإيمان بالله، وملائكته، وكتبه، ورسله، واليوم الآخر، والقدر خيره وشره. وهي مذكورة في حديث جبريل المشهور.","cat":"عقيدة","date":"2026-10-28","opts":["أربعة","خمسة","ستة"],"ok":2},{"id":"b7","q":"ما أول سورة في ترتيب المصحف؟","a":"أول سورة في المصحف هي سورة الفاتحة، وتُقرأ في كل ركعة من الصلاة.","cat":"قرآن","date":"2026-10-28","opts":["البقرة","الإخلاص","الفاتحة"],"ok":2},{"id":"b8","q":"كم عدد سور القرآن الكريم؟","a":"عدد سور القرآن الكريم مئة وأربع عشرة سورة.","cat":"قرآن","date":"2026-10-28","opts":["110","114","120"],"ok":1},{"id":"b9","q":"أي السور تعدل ثلث القرآن كما جاء في الحديث الصحيح؟","a":"جاء في صحيح البخاري أن سورة الإخلاص تعدل ثلث القرآن.","cat":"قرآن","date":"2026-10-28","opts":["سورة الإخلاص","سورة الفاتحة","سورة الكوثر"],"ok":0},{"id":"b10","q":"في أي شهر أُنزل القرآن الكريم؟","a":"أُنزل القرآن في شهر رمضان، وقد ذكر الله ذلك في سورة البقرة.","cat":"قرآن","date":"2026-10-28","opts":["شعبان","رجب","رمضان"],"ok":2},{"id":"b11","q":"من هو أول الخلفاء الراشدين؟","a":"أول الخلفاء الراشدين أبو بكر الصديق رضي الله عنه، ثم عمر، ثم عثمان، ثم علي.","cat":"سيرة","date":"2026-10-28","opts":["عمر بن الخطاب","أبو بكر الصديق","عثمان بن عفان","علي بن أبي طالب"],"ok":1},{"id":"s2","q":"ما هي أركان الإسلام؟","a":"أركان الإسلام خمسة: شهادة أن لا إله إلا الله وأن محمدًا رسول الله، وإقامة الصلاة، وإيتاء الزكاة، وصوم رمضان، وحج البيت لمن استطاع إليه سبيلًا.","cat":"أساسيات","date":"2026-10-28","sample":true},{"id":"s3","q":"هل يبطل الصوم إذا أكل الصائم أو شرب ناسيًا؟","a":"لا يبطل. من أكل أو شرب ناسيًا فليتم صومه، فإنما أطعمه الله وسقاه، وهذا ثابت في الصحيحين.","cat":"عبادات","date":"2026-10-28","sample":true,"opts":["لا يبطل، ويتم صومه","يبطل ويجب قضاؤه","يبطل وتجب الكفارة"],"ok":0}],"owner":"عبدالله محمد","shareUrl":"https://claude.ai/artifact/4WEoQv2GqENXsASjtcAKyi","youtube":"https://youtube.com/channel/UCwFBxJR2UIjM0vK4riMq3fQ","waChannel":"https://whatsapp.com/channel/0029VbCxGcA05MUiyPnzof3m","tiktok":"https://www.tiktok.com/@abdelrahman_qu"}</script>
+
+<script data-keep id="app-js">
+(function(){
+var S=JSON.parse(document.getElementById('state').textContent);
+var cat='',query='',admin=false;
+try{admin=sessionStorage.getItem('qa-admin')==='1'}catch(e){}
+var $=function(s){return document.querySelector(s)};
+var SHELL=`
+  <header class="top"><div class="wrap">
+    <div class="brand">
+      <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><rect x="8" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"/><rect x="8" y="8" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" transform="rotate(45 20 20)"/></svg>
+      <div><h1>أسئلة دينية</h1><p>أسئلة وأجوبة في أمور الدين، يضيفها صاحب الموقع</p></div>
+    </div>
+    <label class="search"><span hidden>بحث في الأسئلة</span><input id="q-search" type="search" placeholder="ابحث في الأسئلة والأجوبة"></label>
+  </div></header>
+  <main class="wrap">
+    <section class="col" aria-label="الأسئلة">
+      <div id="admin-main"></div>
+      <div class="bar"><div class="chips" id="chips"></div><span id="count"></span><span id="score"></span></div>
+      <div id="list"></div>
+      <section class="card" id="cert" aria-label="شهادة تقدير"></section>
+      <p class="foot">الأجوبة هنا للتعريف العام. في المسائل الخاصة بحالتك اسأل أحد أهل العلم الموثوقين.<br>صاحب الموقع: <strong id="owner-name"></strong></p>
+    </section>
+    <aside class="col" aria-label="التواصل">
+      <section class="card" id="contact"></section>
+      <section class="card" id="yt"></section>
+      <section class="card" id="wa"></section>
+      <section class="card" id="tt"></section>
+      <section class="card" id="share"></section>
+      <section class="card" id="admin-side"></section>
+    </aside>
+  </main>
+  <div id="toast" role="status" hidden></div>`;
+$('#root').innerHTML=SHELL;
+$('#owner-name').textContent=S.owner||'';
+var ar=function(n){return Number(n).toLocaleString('ar-EG')};
+var norm=function(s){return String(s).replace(/[ً-ٰٟ]/g,'').replace(/[أإآ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه')};
+
+function h(tag,props){
+  var e=document.createElement(tag),k,v,kids=Array.prototype.slice.call(arguments,2);
+  props=props||{};
+  for(k in props){v=props[k];
+    if(k==='class')e.className=v;
+    else if(k==='text')e.textContent=v;
+    else if(k.indexOf('on')===0)e.addEventListener(k.slice(2),v);
+    else if(v===true)e.setAttribute(k,'');
+    else if(v!==false&&v!=null)e.setAttribute(k,v);
+  }
+  kids.forEach(function(c){if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(c))});
+  return e;
+}
+var tt;
+function toast(msg){var t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(tt);tt=setTimeout(function(){t.hidden=true},4000)}
+
+async function sha(s){
+  var b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('');
+}
+
+/* ---- saving: the page is the record, so it republishes itself ---- */
+var RESET=':root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}';
+function buildDoc(next){
+  var json=JSON.stringify(next).replace(/</g,'\\u003c');
+  var parts=Array.prototype.map.call(document.querySelectorAll('[data-keep]'),function(e){
+    if(e.id==='app-js')return '<div id="root" lang="ar" dir="rtl"></div><script type="application/json" id="state">'+json+'<\/script>'+e.outerHTML;
+    return e.outerHTML;
+  });
+  return '<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>'+RESET+'</style></head><body>'+parts.join('\n')+'</body></html>';
+}
+async function save(next){
+  var art=null;
+  try{art=await (window.claude&&window.claude.use?window.claude.use('artifact'):null)}catch(e){}
+  if(!art){toast('الحفظ يعمل فقط عند فتح الموقع من حساب صاحبه.');return false}
+  try{await art.publish(buildDoc(next));return true}
+  catch(e){
+    var c=e&&e.code;
+    toast(c==='conflict'?'تم تعديل الموقع من مكان آخر. ستظهر آخر نسخة الآن.':(c==='not_writer'||c==='not_granted')?'هذا الحساب لا يملك صلاحية تعديل الموقع. افتحه من حساب صاحبه.':'تعذر الحفظ. حاول مرة أخرى.');
+    return false;
+  }
+}
+function clone(){return JSON.parse(JSON.stringify(S))}
+
+/* ---- public view ---- */
+function renderChips(){
+  var box=$('#chips');box.replaceChildren();
+  var cats=[];S.questions.forEach(function(x){if(cats.indexOf(x.cat)<0)cats.push(x.cat)});
+  if(cats.length<2)return;
+  [''].concat(cats).forEach(function(c){
+    box.append(h('button',{type:'button',class:'chip','aria-pressed':String(cat===c),text:c||'الكل',onclick:function(){cat=c;renderChips();renderList()}}));
+  });
+}
+var armed=null,armTimer,picked={},shown={};
+function quiz(){
+  var total=0,done=0,ok=0;
+  S.questions.forEach(function(x){if(x.opts&&x.opts.length>1){total++;if(picked[x.id]!==undefined){done++;if(picked[x.id]===x.ok)ok++}}});
+  return {total:total,done:done,ok:ok};
+}
+function pct(r){return Math.round(r.ok/r.total*100)}
+function gradeWord(r){var v=pct(r);return v>=90?'ممتاز':v>=75?'جيد جدًا':v>=60?'جيد':'مقبول'}
+var refreshCert=function(){};
+function updScore(){
+  var r=quiz();
+  $('#score').textContent=r.total&&r.done?'نتيجتك: '+ar(r.ok)+' من '+ar(r.done):'';
+  refreshCert();
+}
+function renderList(){
+  var box=$('#list');box.replaceChildren();
+  var nq=norm(query.trim());
+  var qs=S.questions.filter(function(x){return (!cat||x.cat===cat)&&(!nq||norm(x.q+' '+x.a).indexOf(nq)>=0)});
+  $('#count').textContent=ar(qs.length)+' سؤال';
+  if(!S.questions.length){box.append(h('p',{class:'empty',text:'لم تُضف أسئلة بعد. سيظهر هنا كل سؤال يضيفه صاحب الموقع.'}));return}
+  if(!qs.length){box.append(h('p',{class:'empty',text:'لا توجد نتائج مطابقة. جرّب كلمة أخرى.'}));return}
+  updScore();
+  qs.forEach(function(x){
+    var tags=h('div',{class:'tags'},h('span',{class:'tag',text:x.cat}),x.sample?h('span',{class:'tag sample',text:'مثال للتجربة'}):null);
+    var meta=h('div',{class:'meta'},h('span',{text:new Date(x.date+'T00:00:00').toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'})}));
+    if(admin){
+      var del=h('button',{type:'button',class:'btn danger small',text:'حذف',onclick:function(){
+        if(armed!==x.id){armed=x.id;del.textContent='اضغط مرة أخرى للتأكيد';clearTimeout(armTimer);armTimer=setTimeout(function(){armed=null;del.textContent='حذف'},3500);return}
+        del.disabled=true;var n=clone();n.questions=n.questions.filter(function(y){return y.id!==x.id});save(n).then(function(ok){if(!ok)del.disabled=false});
+      }});
+      meta.append(del);
+    }
+    var ansBox=h('div',{class:'ans'});
+    var hasOpts=x.opts&&x.opts.length>1;
+    (function fill(){
+      ansBox.replaceChildren();
+      var p=picked[x.id];
+      var open=!hasOpts||p!==undefined||shown[x.id];
+      if(hasOpts){
+        ansBox.append(h('p',{class:'opts-h',text:'اختر الإجابة الصحيحة'}));
+        var g=h('div',{class:'opts',role:'group','aria-label':'اختيارات السؤال'});
+        x.opts.forEach(function(t,i){
+          var cls='opt-btn';
+          if(p!==undefined){if(i===x.ok)cls+=' right';else if(i===p)cls+=' wrong'}
+          g.append(h('button',{type:'button',class:cls,disabled:p!==undefined,text:t,onclick:function(){picked[x.id]=i;updScore();fill()}}));
+        });
+        ansBox.append(g);
+        if(p!==undefined)ansBox.append(h('p',{class:'res '+(p===x.ok?'right':'wrong'),text:p===x.ok?'إجابة صحيحة':'إجابة غير صحيحة. الصحيح: '+x.opts[x.ok]}));
+      }
+      if(open)ansBox.append(h('p',{text:x.a}),meta);
+    })();
+    var d=h('details',{class:'q'},
+      h('summary',null,h('div',{class:'qt'},h('strong',{text:x.q}),tags)),
+      ansBox);
+    box.append(d);
+  });
+}
+async function copyNum(n,node,msg){
+  try{await navigator.clipboard.writeText(n);toast(msg||'تم نسخ الرقم')}
+  catch(e){var r=document.createRange();r.selectNodeContents(node);var s=getSelection();s.removeAllRanges();s.addRange(r);toast('النص محدد، انسخه من القائمة.')}
+}
+function renderContact(){
+  var c=$('#contact');c.replaceChildren(h('h2',{text:'للتواصل وإرسال الأسئلة'}));
+  S.phones.forEach(function(p){
+    var num=h('div',{class:'num',text:p.n});
+    c.append(h('div',{class:'phone'},h('small',{text:p.label}),num,
+      h('div',{class:'acts'},
+        h('button',{type:'button',class:'btn solid',text:'نسخ الرقم',onclick:function(){copyNum(p.n,num)}}),
+        h('a',{class:'btn',href:'https://wa.me/2'+p.n,target:'_blank',rel:'noopener',text:'واتساب'}),
+        h('a',{class:'btn',href:'tel:'+p.n,text:'اتصال'}))));
+  });
+}
+
+function renderYT(){
+  var c=$('#yt');c.replaceChildren();
+  if(!S.youtube){c.hidden=true;return}
+  c.hidden=false;
+  c.append(h('h2',{text:'قناتنا على يوتيوب'}),h('p',{class:'note',text:'تابع القناة واشترك فيها.'}),
+    h('div',{class:'acts'},h('a',{class:'btn solid',href:S.youtube,target:'_blank',rel:'noopener',text:'زيارة القناة'})));
+}
+function renderWA(){
+  var c=$('#wa');c.replaceChildren();
+  if(!S.waChannel){c.hidden=true;return}
+  c.hidden=false;
+  c.append(h('h2',{text:'قناتنا على واتساب'}),h('p',{class:'note',text:'انضم إلى القناة لتصلك الأسئلة الجديدة.'}),
+    h('div',{class:'acts'},h('a',{class:'btn solid',href:S.waChannel,target:'_blank',rel:'noopener',text:'الانضمام للقناة'})));
+}
+function renderTT(){
+  var c=$('#tt');c.replaceChildren();
+  if(!S.tiktok){c.hidden=true;return}
+  c.hidden=false;
+  c.append(h('h2',{text:'حسابنا على تيك توك'}),h('p',{class:'note',text:'تابع الحساب لمشاهدة المقاطع الجديدة.'}),
+    h('div',{class:'acts'},h('a',{class:'btn solid',href:S.tiktok,target:'_blank',rel:'noopener',text:'زيارة الحساب'})));
+}
+function renderShare(){
+  var c=$('#share');c.replaceChildren(h('h2',{text:'شارك الموقع'}));
+  var u=S.shareUrl;
+  if(!u){c.append(h('p',{class:'note',text:'يظهر رابط المشاركة هنا بعد أن يضيفه صاحب الموقع.'}));return}
+  var e=encodeURIComponent,msg='أسئلة دينية: أجب عن الأسئلة واحصل على شهادة تقدير بدرجتك';
+  var url=h('div',{class:'url',text:u});
+  function lk(t,href){return h('a',{class:'btn',href:href,target:'_blank',rel:'noopener',text:t})}
+  c.append(url,h('div',{class:'acts'},
+    lk('واتساب','https://wa.me/?text='+e(msg+'\n'+u)),
+    lk('تيليجرام','https://t.me/share/url?url='+e(u)+'&text='+e(msg)),
+    lk('فيسبوك','https://www.facebook.com/sharer/sharer.php?u='+e(u)),
+    h('button',{type:'button',class:'btn solid',text:'نسخ الرابط',onclick:function(){copyNum(u,url,'تم نسخ الرابط')}})));
+}
+
+/* ---- owner area ---- */
+function renderAdmin(){
+  var side=$('#admin-side'),main=$('#admin-main');
+  side.replaceChildren();main.replaceChildren();
+  if(!admin){
+    side.append(h('h2',{text:'دخول صاحب الموقع'}),h('p',{class:'note',text:'تسجيل الدخول لصاحب الموقع فقط، لإضافة الأسئلة وحذفها.'}));
+    var pw=h('input',{id:'pw',type:'password',autocomplete:'current-password',placeholder:'كلمة السر'});
+    var form=h('form',{class:'f',onsubmit:async function(ev){
+      ev.preventDefault();var b=form.querySelector('button');b.disabled=true;
+      var ok=false;try{ok=(await sha(S.pass.salt+pw.value))===S.pass.hash}catch(e){}
+      if(ok){admin=true;try{sessionStorage.setItem('qa-admin','1')}catch(e){}render()}
+      else{setTimeout(function(){b.disabled=false;toast('كلمة السر غير صحيحة.');pw.select()},700)}
+    }},h('div',{class:'fld'},h('label',{for:'pw',text:'كلمة السر'}),pw),h('button',{type:'submit',class:'btn solid',text:'دخول'}));
+    side.append(form);
+    return;
+  }
+  side.append(h('h2',{text:'لوحة صاحب الموقع'}),h('p',{class:'note',text:'أنت مسجّل الدخول. يمكنك إضافة الأسئلة وحذفها وتغيير كلمة السر.'}));
+  var np=h('input',{id:'np',type:'password',autocomplete:'new-password',placeholder:'6 أحرف على الأقل'});
+  var pf=h('form',{class:'f',onsubmit:async function(ev){
+    ev.preventDefault();
+    if(np.value.length<6){toast('كلمة السر الجديدة قصيرة. اكتب 6 أحرف على الأقل.');return}
+    var b=pf.querySelector('button');b.disabled=true;
+    var salt=Array.from(crypto.getRandomValues(new Uint8Array(8))).map(function(x){return x.toString(16).padStart(2,'0')}).join('');
+    var n=clone();n.pass={salt:salt,hash:await sha(salt+np.value)};
+    var ok=await save(n);if(!ok)b.disabled=false;else toast('تم تغيير كلمة السر.');
+  }},h('div',{class:'fld'},h('label',{for:'np',text:'كلمة سر جديدة'}),np),h('button',{type:'submit',class:'btn',text:'تغيير كلمة السر'}));
+  var su=h('input',{id:'su',type:'url',dir:'ltr',value:S.shareUrl||'',placeholder:'https://...'});
+  var sf=h('form',{class:'f',onsubmit:async function(ev){
+    ev.preventDefault();var v=su.value.trim();
+    if(v&&v.indexOf('https://')!==0){toast('الرابط لازم يبدأ بـ https://');return}
+    var b=sf.querySelector('button');b.disabled=true;
+    var n=clone();n.shareUrl=v;var ok=await save(n);if(!ok)b.disabled=false;
+  }},h('div',{class:'fld'},h('label',{for:'su',text:'رابط الموقع للمشاركة'}),su),h('button',{type:'submit',class:'btn',text:'حفظ الرابط'}));
+  side.append(pf,sf,h('button',{type:'button',class:'btn',text:'تسجيل الخروج',onclick:function(){admin=false;try{sessionStorage.removeItem('qa-admin')}catch(e){}render()}}));
+
+  var q=h('textarea',{id:'nq',required:true,placeholder:'اكتب السؤال'});
+  var a=h('textarea',{id:'na',required:true,placeholder:'اكتب الإجابة'});
+  var c=h('input',{id:'nc',type:'text',list:'cats',placeholder:'مثال: عبادات، معاملات، أسرة'});
+  var dl=h('datalist',{id:'cats'});
+  ['عبادات','أساسيات','معاملات','أسرة','أخلاق','متنوع'].forEach(function(x){dl.append(h('option',{value:x}))});
+  var oi=[],orad=[];
+  var og=h('div',{class:'fld'},h('label',{text:'اختيارات للسؤال (اختياري). حدّد الاختيار الصحيح بالدائرة'}));
+  [0,1,2,3].forEach(function(i){
+    var t=h('input',{id:'o'+i,type:'text',placeholder:'اختيار '+ar(i+1),maxlength:'200'});
+    var r=h('input',{type:'radio',name:'okopt',value:String(i),'aria-label':'الاختيار الصحيح رقم '+ar(i+1)});
+    oi.push(t);orad.push(r);og.append(h('div',{class:'optrow'},r,t));
+  });
+  var af=h('form',{class:'f',onsubmit:async function(ev){
+    ev.preventDefault();
+    var qv=q.value.trim(),av=a.value.trim();
+    if(qv.length<5||av.length<5){toast('اكتب السؤال والإجابة كاملين.');return}
+    var b=af.querySelector('button.solid');
+    var opts=[],okIdx=-1;
+    oi.forEach(function(t,i){var v=t.value.trim();if(v){opts.push(v);if(orad[i].checked)okIdx=opts.length-1}});
+    if(opts.length&&(opts.length<2||okIdx<0)){toast(opts.length<2?'اكتب اختيارين على الأقل، أو اترك الاختيارات فارغة.':'حدّد الاختيار الصحيح بالدائرة.');return}
+    b.disabled=true;
+    var n=clone(),qo={id:'q'+Date.now().toString(36),q:qv,a:av,cat:c.value.trim()||'متنوع',date:new Date().toISOString().slice(0,10)};
+    if(opts.length){qo.opts=opts;qo.ok=okIdx}
+    n.questions.unshift(qo);
+    var ok=await save(n);if(!ok)b.disabled=false;
+  }},
+    h('div',{class:'fld'},h('label',{for:'nq',text:'السؤال'}),q),
+    h('div',{class:'fld'},h('label',{for:'na',text:'الإجابة'}),a),
+    h('div',{class:'fld'},h('label',{for:'nc',text:'التصنيف'}),c,dl),
+    og,
+    h('button',{type:'submit',class:'btn solid',text:'إضافة السؤال'}));
+  main.append(h('section',{class:'card'},h('h2',{text:'إضافة سؤال جديد'}),af));
+}
+/* ---- certificate of appreciation (unlocked after the quiz) ---- */
+var THEMES=[
+  {id:'blue',label:'أزرق ملكي',frame:'#14306b',accent:'#b8892f',nm:'#1d4aa0',paper:'#fbfcff',text:'#14213d',muted:'#55627f'},
+  {id:'green',label:'أخضر',frame:'#0b3b35',accent:'#b8892f',nm:'#0e5c52',paper:'#fbfdfc',text:'#12302d',muted:'#4f6b66'},
+  {id:'maroon',label:'عنابي',frame:'#6d1f2c',accent:'#b8892f',nm:'#8a2a3a',paper:'#fffcfa',text:'#33141a',muted:'#7a5a60'},
+  {id:'gold',label:'ذهبي',frame:'#5a4010',accent:'#c49a2c',nm:'#7a5612',paper:'#fffdf6',text:'#3a2a0c',muted:'#7a6a4a'}
+];
+function star(x,cx,cy,r,col){
+  x.save();x.translate(cx,cy);x.strokeStyle=col;x.lineWidth=4;
+  [0,Math.PI/4].forEach(function(a){x.save();x.rotate(a);x.strokeRect(-r,-r,2*r,2*r);x.restore()});
+  x.restore();
+}
+function placeWord(r){var v=pct(r);return v===100?'المركز الأول':v>=90?'المركز الثاني':v>=80?'المركز الثالث':v>=70?'المركز الرابع':v>=60?'المركز الخامس':'المركز السادس'}
+async function drawCert(cv,name,r,t){
+  try{await Promise.all([
+    document.fonts.load('700 96px "Reem Kufi"','شهادة تقدير'),
+    document.fonts.load('600 80px "Noto Naskh Arabic"',name+(S.owner||'')+'المركز الأول'),
+    document.fonts.load('400 44px "Noto Naskh Arabic"','تقديرا لاهتمامكم')
+  ])}catch(e){}
+  var W=1600,H=1130,x=cv.getContext('2d'),K='"Noto Naskh Arabic",Tahoma,serif';
+  cv.width=W;cv.height=H;
+  x.fillStyle=t.paper;x.fillRect(0,0,W,H);
+  x.strokeStyle=t.frame;x.lineWidth=14;x.strokeRect(40,40,W-80,H-80);
+  x.strokeStyle=t.accent;x.lineWidth=3;x.strokeRect(68,68,W-136,H-136);
+  [[130,130],[W-130,130],[130,H-130],[W-130,H-130]].forEach(function(q){star(x,q[0],q[1],22,t.accent)});
+  star(x,W/2,185,34,t.accent);
+  x.direction='rtl';x.textAlign='center';x.textBaseline='alphabetic';
+  x.fillStyle=t.frame;x.font='700 100px "Reem Kufi",Tahoma,sans-serif';
+  x.fillText('شهادة تقدير',W/2,350);
+  x.fillStyle=t.muted;x.font='400 44px '+K;
+  x.fillText('تُمنح هذه الشهادة إلى',W/2,440);
+  var size=100;
+  do{x.font='600 '+size+'px '+K;size-=4}while(x.measureText(name).width>W-360&&size>28);
+  x.fillStyle=t.nm;x.fillText(name,W/2,575);
+  x.strokeStyle=t.accent;x.lineWidth=3;x.beginPath();x.moveTo(W/2-430,615);x.lineTo(W/2+430,615);x.stroke();
+  x.fillStyle=t.text;x.font='400 40px '+K;
+  x.fillText('تقديرًا لاهتمامكم بطلب العلم ومتابعتكم',W/2,705);
+  x.fillText('الأسئلة والأجوبة في موقع «أسئلة دينية»',W/2,765);
+  if(r){
+    var pl=placeWord(r);
+    if(pl){x.fillStyle=t.accent;x.font='700 66px "Reem Kufi",Tahoma,sans-serif';x.fillText('وقد حصل على '+pl,W/2,860)}
+    x.fillStyle=t.nm;x.font='600 48px '+K;
+    x.fillText('الدرجة: '+ar(r.ok)+' من '+ar(r.total)+' ('+ar(pct(r))+'٪) · '+gradeWord(r),W/2,pl?925:880);
+  }
+  x.strokeStyle=t.muted;x.lineWidth=2;
+  [430,W-430].forEach(function(cx){x.beginPath();x.moveTo(cx-190,975);x.lineTo(cx+190,975);x.stroke()});
+  x.fillStyle=t.text;x.font='600 40px '+K;
+  x.fillText(S.owner||'',430,960);
+  x.fillText(new Date().toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'}),W-430,960);
+  x.fillStyle=t.muted;x.font='400 34px '+K;
+  x.fillText('صاحب الموقع',430,1025);
+  x.fillText('التاريخ',W-430,1025);
+}
+function renderCert(){
+  var box=$('#cert'),theme=THEMES[0],lastName='';
+  var nm=h('input',{id:'cert-name',type:'text',maxlength:'60',autocomplete:'name',placeholder:'اكتب اسمك كما تريده على الشهادة'});
+  var out=h('div',{class:'cert-out',hidden:true});
+  var cv=h('canvas',{role:'img','aria-label':'شهادة تقدير'});
+  var saveBtn=h('button',{type:'button',class:'btn',text:'حفظ الشهادة كصورة',hidden:true});
+  out.append(cv,h('div',{class:'acts'},saveBtn));
+  var lock=h('p',{class:'note'});
+  var scoreLine=h('p',{class:'res right'});
+  function paint(){var r=quiz();return drawCert(cv,lastName,r.total?r:null,theme)}
+  var chips=h('div',{class:'chips',role:'group','aria-label':'لون الشهادة'});
+  function renderSw(){
+    chips.replaceChildren();
+    THEMES.forEach(function(t){
+      var dot=h('span',{class:'sw'});dot.style.background=t.frame;
+      chips.append(h('button',{type:'button',class:'chip','aria-pressed':String(theme===t),onclick:function(){theme=t;renderSw();if(lastName&&!out.hidden)paint()}},dot,t.label));
+    });
+  }
+  renderSw();
+  var f=h('form',{class:'f',onsubmit:async function(ev){
+    ev.preventDefault();
+    var v=nm.value.trim().replace(/\s+/g,' ');
+    if(v.length<2){toast('اكتب اسمك أولًا.');return}
+    lastName=v;await paint();out.hidden=false;
+  }},h('div',{class:'fld'},h('label',{for:'cert-name',text:'الاسم على الشهادة'}),nm),
+     h('div',{class:'fld'},h('label',{text:'لون الشهادة'}),chips),
+     h('button',{type:'submit',class:'btn solid',text:'إنشاء الشهادة'}));
+  var ready=h('div',{class:'cert-form'},scoreLine,f);
+  box.append(h('h2',{text:'شهادة التقدير'}),lock,ready,out);
+  var wasLocked=null;
+  refreshCert=function(){
+    var r=quiz(),locked=r.total>0&&r.done<r.total;
+    lock.hidden=!locked;ready.hidden=locked;scoreLine.hidden=!r.total;
+    if(locked){out.hidden=true;lock.textContent='تظهر شهادتك بدرجتك بعد أن تجيب عن كل أسئلة الاختيارات. أجبت عن '+ar(r.done)+' من '+ar(r.total)+'.'}
+    if(r.total&&!locked){var pl=placeWord(r);scoreLine.textContent='أنهيت الأسئلة. درجتك: '+ar(r.ok)+' من '+ar(r.total)+' ('+ar(pct(r))+'٪)'+(pl?' · '+pl:'')}
+    if(wasLocked&&!locked)toast('أنهيت الأسئلة. اكتب اسمك لتحصل على شهادتك.');
+    wasLocked=locked;
+  };
+  refreshCert();
+  (async function(){
+    var dl=null;try{dl=await (window.claude&&window.claude.use?window.claude.use('downloads'):null)}catch(e){}
+    if(!dl)return;
+    saveBtn.hidden=false;
+    saveBtn.addEventListener('click',function(){
+      cv.toBlob(function(b){
+        if(!b){toast('تعذر تجهيز الصورة.');return}
+        dl.save({filename:'certificate.png',data:b}).then(function(){toast('تم حفظ الشهادة.')},function(e){if(!e||e.code!=='declined')toast('تعذر حفظ الصورة. اضغط مطولًا على الشهادة لحفظها.')});
+      },'image/png');
+    });
+  })();
+}
+function render(){renderChips();renderList();renderContact();renderYT();renderWA();renderTT();renderShare();renderAdmin()}
+$('#q-search').addEventListener('input',function(e){query=e.target.value;renderList()});
+render();renderCert();
+})();
+</script>
+
+</body></html>
